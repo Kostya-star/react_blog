@@ -1,22 +1,24 @@
 import { FC } from 'react';
 import { IPost } from '../../types/posts';
-import s from './Post.module.scss';
+import { Button } from '../UI/Button/Button';
+import s from './PostItem.module.scss';
 
 interface IPostProps {
   post: IPost
+  id: number
 }
 
-export const PostItem: FC<IPostProps> = ({ post }) => {
+export const PostItem: FC<IPostProps> = ({ post, id }) => {
   return (
     <div className={s.post}>
       <div>
         <strong>
-          {post.id}. {post.body}
+          {id}. {post.body}
         </strong>
         <p>{post.body}</p>
       </div>
       <div>
-        <button>Delete</button>
+      {/* <Button title='Delete'/> */}
       </div>
     </div>
   );
