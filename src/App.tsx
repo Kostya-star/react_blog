@@ -1,8 +1,8 @@
-import { MouseEvent, useState } from 'react';
+import { useState } from 'react';
+import { PostForm } from './components/PostForm';
 import { PostList } from './components/PostList';
-import { Button } from './components/UI/Button/Button';
-import { Input } from './components/UI/Input/Input';
 import './scss/app.scss';
+import { IPost } from './types/posts';
 
 const App = () => {
   const [posts, setPosts] = useState([
@@ -11,32 +11,28 @@ const App = () => {
     { id: 3, title: 'Javascript 3', body: 'Javascript Description' },
   ]);
 
-  const [post, setPost] = useState({ title: '', body: '' });
+  const createNewPost = (newPost: IPost) => {
+    setPosts([...posts, newPost]);
+  };
 
-  const addNewPost = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setPosts([...posts, { ...post, id: Date.now() }]);
-    setPost({ title: '', body: '' });
+  const deletePost = (post: IPost) => {
+    setPosts(posts.filter((p) => p.id !== post.id));
   };
 
   return (
     <div className="container">
-      <form>
-        <Input
-          value={post.title}
-          onChange={(e) => setPost({ ...post, title: e.target.value })}
-          type="text"
-          placeholder="Post title"
+      <PostForm createPost={createNewPost} />
+
+      {posts.length ? (
+        <PostList
+          title="Javascript Posts"
+          posts={posts}
+          deletePost={deletePost}
         />
-        <Input
-          value={post.body}
-          onChange={(e) => setPost({ ...post, body: e.target.value })}
-          type="text"
-          placeholder="Post description"
-        />
-        <Button title="Add post" onClick={addNewPost} />
-      </form>
-      <PostList title="Javascript Posts" posts={posts} />
+      ) : (
+        <h1 style={{textAlign: 'center'}}>No posts</h1>
+      )}
+
     </div>
   );
 };
