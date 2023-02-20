@@ -1,0 +1,14 @@
+.pages__container {
+  margin-top: 30px;
+}
+
+.page {
+  padding: 10px;
+  border: 1px solid teal;
+  cursor: pointer;
+
+  &__active {
+    border: 2px solid orange;
+    font-weight: bold;
+  }
+}

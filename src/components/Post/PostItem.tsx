@@ -5,16 +5,15 @@ import { Button } from './../UI/Button/Button';
 
 interface IPostProps {
   post: IPost
-  id: number
   deletePost: (post: IPost) => void
 }
 
-export const PostItem: FC<IPostProps> = ({ post, id, deletePost }) => {
+export const PostItem: FC<IPostProps> = ({ post, deletePost }) => {
   return (
     <div className={s.post}>
       <div>
         <strong>
-          {id}. {post.title}
+          {post.id}. {post.title}
         </strong>
         <p>{post.body}</p>
       </div>

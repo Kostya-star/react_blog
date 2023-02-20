@@ -1,7 +1,12 @@
-import { instance } from "./instance"
+import { instance } from './instance';
 
 export const postsAPI = {
-  getPosts: async () => {
-    return await instance.get('/posts')
-  }
-}
+  getPosts: async (_limit = 5, _page = 1) => {
+    return await instance.get('/posts', {
+      params: {
+        _limit,
+        _page,
+      },
+    });
+  },
+};

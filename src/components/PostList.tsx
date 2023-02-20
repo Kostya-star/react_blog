@@ -16,9 +16,9 @@ export const PostList: FC<IPostListProps> = ({ title, posts, deletePost }) => {
       <h1>{title}</h1>
       <TransitionGroup>
         {posts.length ? (
-          posts.map((post, index) => (
+          posts.map((post) => (
             <CSSTransition key={post.id} timeout={500} classNames="post">
-              <PostItem id={index + 1} post={post} deletePost={deletePost} />
+              <PostItem post={post} deletePost={deletePost} />
             </CSSTransition>
           ))
         ) : (
