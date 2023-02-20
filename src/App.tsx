@@ -4,33 +4,16 @@ import { PostForm } from './components/PostForm';
 import { PostList } from './components/PostList';
 import { Button } from './components/UI/Button/Button';
 import { Modal } from './components/UI/Modal/Modal';
+import { usePosts } from './hooks/usePosts';
 import './scss/app.scss';
 import { IPost } from './types/posts';
 
 const App = () => {
-  const [posts, setPosts] = useState<IPost[]>([
-    { id: 1, title: 'aa', body: 'cc' },
-    { id: 2, title: 'bb', body: 'bb' },
-    { id: 3, title: 'cc', body: 'aa' },
-  ]);
+  const [posts, setPosts] = useState<IPost[]>([]);
   const [filter, setFilter] = useState({ sort: '', search: '' });
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search)
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      return [...posts].sort((a, b) =>
-        // @ts-expect-error
-        a[filter.sort].localeCompare(b[filter.sort]),
-      );
-    }
-    return posts;
-  }, [posts, filter.sort]);
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(filter.search.toLowerCase()),
-    );
-  }, [filter.search, sortedPosts]);
 
   const createNewPost = (newPost: IPost) => {
     setPosts([...posts, newPost]);
