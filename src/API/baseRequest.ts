@@ -1,0 +1,1 @@
+export const baseRequest = 'https://jsonplaceholder.typicode.com'
