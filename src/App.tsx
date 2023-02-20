@@ -4,6 +4,7 @@ import { PostFilter } from './components/PostFilter';
 import { PostForm } from './components/PostForm';
 import { PostList } from './components/PostList';
 import { Button } from './components/UI/Button/Button';
+import { Loader } from './components/UI/Loader/Loader';
 import { Modal } from './components/UI/Modal/Modal';
 import { usePosts } from './hooks/usePosts';
 import './scss/app.scss';
@@ -27,8 +28,8 @@ const App = () => {
       } finally {
         setIsLoading(false);
       }
-    })()
-  }, [])
+    })();
+  }, []);
 
   const createNewPost = (newPost: IPost) => {
     setPosts([...posts, newPost]);
@@ -53,7 +54,9 @@ const App = () => {
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
       {isLoading ? (
-        <div>Loading</div>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Loader />
+        </div>
       ) : (
         <PostList
           title="Javascript Posts"
