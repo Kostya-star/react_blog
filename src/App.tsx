@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { PostFilter } from './components/PostFilter';
 import { PostForm } from './components/PostForm';
 import { PostList } from './components/PostList';
+import { Button } from './components/UI/Button/Button';
+import { Modal } from './components/UI/Modal/Modal';
 import './scss/app.scss';
 import { IPost } from './types/posts';
 
@@ -12,6 +14,7 @@ const App = () => {
     { id: 3, title: 'cc', body: 'aa' },
   ]);
   const [filter, setFilter] = useState({ sort: '', search: '' });
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const sortedPosts = useMemo(() => {
     if (filter.sort) {
@@ -31,6 +34,7 @@ const App = () => {
 
   const createNewPost = (newPost: IPost) => {
     setPosts([...posts, newPost]);
+    setIsModalVisible(false);
   };
 
   const deletePost = (post: IPost) => {
@@ -39,7 +43,15 @@ const App = () => {
 
   return (
     <div className="container">
-      <PostForm createPost={createNewPost} />
+      <Button
+        onClick={() => setIsModalVisible(true)}
+        style={{ marginTop: '30px' }}
+      >
+        Add post
+      </Button>
+      <Modal isVisible={isModalVisible} setIsVisible={setIsModalVisible}>
+        <PostForm createPost={createNewPost} />
+      </Modal>
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
       <PostList
