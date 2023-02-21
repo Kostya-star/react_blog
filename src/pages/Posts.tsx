@@ -1,4 +1,10 @@
-import { useEffect, useState } from 'react';
+import {
+  LegacyRef,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { postsAPI } from '../API/requests';
 import { PostFilter } from '../components/PostFilter';
 import { PostForm } from '../components/PostForm';
@@ -8,6 +14,7 @@ import { Loader } from '../components/UI/Loader/Loader';
 import { Modal } from '../components/UI/Modal/Modal';
 import { Pagination } from '../components/UI/Pagination/Pagination';
 import { useFetching } from '../hooks/useFetching';
+import { useObserver } from '../hooks/useObserver';
 import { usePosts } from '../hooks/usePosts';
 import { IPost } from '../types/posts';
 import { getPageCount } from '../utils/pages';
@@ -23,6 +30,8 @@ export const Posts = () => {
   const [pagesLimit, setPagesLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const lastElement = useRef<HTMLDivElement>(null);
+
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search);
 
   const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
@@ -31,6 +40,10 @@ export const Posts = () => {
     const totalPostsCount = resp.headers['x-total-count'];
     setPagesCount(getPageCount(totalPostsCount, pagesLimit));
   });
+
+  // useObserver(lastElement, currentPage < pagesCount, isPostsLoading, () =>
+  //   setCurrentPage(currentPage + 1),
+  // );
 
   useEffect(() => {
     fetchPosts();
@@ -63,6 +76,9 @@ export const Posts = () => {
           <>There has been an error `${postError}`</>
         </h1>
       )}
+
+      {/* <div ref={lastElement} style={{ height: '20px', background: 'red' }}></div> */}
+
       {isPostsLoading ? (
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Loader />
