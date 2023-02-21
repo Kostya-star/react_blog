@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Input } from './UI/Input/Input';
 import { Select } from './UI/Select/Select';
 
-const selectOptions = [
+const sortOptions = [
   { value: 'title', name: 'По названию' },
   { value: 'body', name: 'По описанию' },
 ];
@@ -32,7 +32,7 @@ export const PostFilter: FC<IPostFilterProps> = ({ filter, setFilter }) => {
           setFilter({ ...filter, sort: selectedSort })
         }
         defaultValue="Сортировка"
-        options={selectOptions}
+        options={sortOptions}
       />
     </>
   );

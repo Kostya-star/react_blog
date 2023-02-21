@@ -1,12 +1,12 @@
 import { FC } from 'react';
 
 interface IOption {
-  value: string;
+  value: string | number;
   name: string;
 }
 
 interface ISelectProps {
-  value: string
+  value: string | number
   onChange: (val: string) => void
   options: IOption[];
   defaultValue: string;

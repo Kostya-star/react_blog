@@ -1,10 +1,4 @@
-import {
-  LegacyRef,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { postsAPI } from '../API/requests';
 import { PostFilter } from '../components/PostFilter';
 import { PostForm } from '../components/PostForm';
@@ -13,11 +7,17 @@ import { Button } from '../components/UI/Button/Button';
 import { Loader } from '../components/UI/Loader/Loader';
 import { Modal } from '../components/UI/Modal/Modal';
 import { Pagination } from '../components/UI/Pagination/Pagination';
+import { Select } from '../components/UI/Select/Select';
 import { useFetching } from '../hooks/useFetching';
-import { useObserver } from '../hooks/useObserver';
 import { usePosts } from '../hooks/usePosts';
 import { IPost } from '../types/posts';
 import { getPageCount } from '../utils/pages';
+
+const limitOptions = [
+  { value: 5, name: '5' },
+  { value: 10, name: '10' },
+  { value: -1, name: 'Show all' },
+];
 
 export const Posts = () => {
   const [posts, setPosts] = useState<IPost[]>([]);
@@ -27,10 +27,10 @@ export const Posts = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [pagesCount, setPagesCount] = useState(0);
-  const [pagesLimit, setPagesLimit] = useState(5);
+  const [pagesLimit, setPagesLimit] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const lastElement = useRef<HTMLDivElement>(null);
+  // const lastElement = useRef<HTMLDivElement>(null);
 
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.search);
 
@@ -47,7 +47,7 @@ export const Posts = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [currentPage]);
+  }, [currentPage, pagesLimit]);
 
   const createNewPost = (newPost: IPost) => {
     setPosts([...posts, newPost]);
@@ -71,6 +71,13 @@ export const Posts = () => {
       </Modal>
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
+      <Select
+        value={pagesLimit}
+        onChange={(selectedLimit) => setPagesLimit(Number(selectedLimit))}
+        defaultValue="Page post size"
+        options={limitOptions}
+      />
+
       {postError && (
         <h1>
           <>There has been an error `${postError}`</>
