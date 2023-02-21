@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import { IPost } from '../types/posts';
-import { PostItem } from './Post/PostItem';
+import { useNavigate } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import '../scss/app.scss';
+import { IPost } from '../types/posts';
+import { PostItem } from './Post/PostItem';
+import { Button } from './UI/Button/Button';
 
 interface IPostListProps {
   title: string;
@@ -11,6 +13,12 @@ interface IPostListProps {
 }
 
 export const PostList: FC<IPostListProps> = ({ title, posts, deletePost }) => {
+  const navigate = useNavigate();
+
+  const onNavigatePostId = (id: number) => {
+    navigate('/posts/' + id);
+  };
+
   return (
     <div>
       <h1>{title}</h1>
@@ -18,7 +26,10 @@ export const PostList: FC<IPostListProps> = ({ title, posts, deletePost }) => {
         {posts.length ? (
           posts.map((post) => (
             <CSSTransition key={post.id} timeout={500} classNames="post">
-              <PostItem post={post} deletePost={deletePost} />
+              <PostItem post={post}>
+                <Button onClick={() => onNavigatePostId(post.id)}>Open</Button>
+                <Button onClick={() => deletePost(post)}>Delete</Button>
+              </PostItem>
             </CSSTransition>
           ))
         ) : (

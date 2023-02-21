@@ -2,8 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   border: 3px solid rgb(93, 162, 177);
+  border-radius: 20px;
   padding: 25px;
   margin-bottom: 20px;
+  &__buttons {
+    display: flex;
+    gap: 10px;
+  }
 }

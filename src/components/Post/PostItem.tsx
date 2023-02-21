@@ -1,14 +1,13 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { IPost } from '../../types/posts';
 import s from './PostItem.module.scss';
-import { Button } from './../UI/Button/Button';
 
 interface IPostProps {
-  post: IPost
-  deletePost: (post: IPost) => void
+  post: IPost;
+  children?: ReactNode;
 }
 
-export const PostItem: FC<IPostProps> = ({ post, deletePost }) => {
+export const PostItem: FC<IPostProps> = ({ post, children }) => {
   return (
     <div className={s.post}>
       <div>
@@ -17,9 +16,7 @@ export const PostItem: FC<IPostProps> = ({ post, deletePost }) => {
         </strong>
         <p>{post.body}</p>
       </div>
-      <div>
-      <Button onClick={() => deletePost(post)}>Delete</Button>
-      </div>
+      <div className={s.post__buttons}>{children}</div>
     </div>
   );
 };

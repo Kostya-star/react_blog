@@ -9,4 +9,12 @@ export const postsAPI = {
       },
     });
   },
+
+  getPostById: async (id: number) => {
+    return await instance.get('/posts/' + id)
+  },
+
+  getCommentsById: async (id: number) => {
+    return await instance.get(`/posts/${id}/comments`)
+  }
 };

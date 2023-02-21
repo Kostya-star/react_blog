@@ -4,8 +4,8 @@ import s from './Input.module.scss';
 interface InputProps {
   type: string;
   placeholder: string;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input: FC<InputProps> = ({ ...props }) => {

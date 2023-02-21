@@ -3,7 +3,7 @@ import s from './Button.module.scss';
 
 interface IButtonProps {
   children: ReactNode;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   style?: CSSProperties;
 }
 
