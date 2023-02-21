@@ -1,14 +1,12 @@
 import { FC } from 'react';
 import { IPostComment } from '../../types/posts';
-import s from './Comment.module.scss'
+import s from './Comment.module.scss';
 
 interface ICommentProps {
-  comment: IPostComment
+  comment: IPostComment;
 }
 
 export const Comment: FC<ICommentProps> = ({ comment }) => {
-  console.log(comment);
-  
   return (
     <div className={s.comment}>
       <h3>User: {comment.email}</h3>
