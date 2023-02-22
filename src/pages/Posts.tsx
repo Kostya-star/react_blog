@@ -27,7 +27,7 @@ export const Posts = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [pagesCount, setPagesCount] = useState(0);
-  const [pagesLimit, setPagesLimit] = useState(10);
+  const [pagesLimit, setPagesLimit] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
 
   // const lastElement = useRef<HTMLDivElement>(null);
@@ -70,6 +70,8 @@ export const Posts = () => {
         <PostForm createPost={createNewPost} />
       </Modal>
       <hr style={{ margin: '15px 0' }} />
+      <div style={{ display: 'flex', gap: '50px' }}>
+
       <PostFilter filter={filter} setFilter={setFilter} />
       <Select
         value={pagesLimit}
@@ -77,6 +79,7 @@ export const Posts = () => {
         defaultValue="Page post size"
         options={limitOptions}
       />
+      </div>
 
       {postError && (
         <h1>
@@ -91,7 +94,7 @@ export const Posts = () => {
           <Loader />
         </div>
       ) : (
-        <>
+        <div style={{ marginTop: '30px' }}>
           <PostList
             title="Javascript Posts"
             posts={sortedAndSearchedPosts}
@@ -102,7 +105,7 @@ export const Posts = () => {
             currentPage={currentPage}
             onChangePage={(page) => setCurrentPage(page)}
           />
-        </>
+        </div>
       )}
     </div>
   );

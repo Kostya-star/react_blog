@@ -29,12 +29,14 @@ export const PostForm: FC<IPostFormProps> = ({ createPost }) => {
         onChange={(e) => setPost({ ...post, title: e.target.value })}
         type="text"
         placeholder="Post title"
+        required
       />
       <Input
         value={post.body}
         onChange={(e) => setPost({ ...post, body: e.target.value })}
         type="text"
         placeholder="Post description"
+        required
       />
       <Button onClick={onAddPostHandle}>Add post</Button>
     </form>
